@@ -15,13 +15,11 @@ require('dotenv').config();
 //   .then(() => console.log('MongoDB is connected'))
 //   .catch((error) => console.log(error));
 
-
 app.use(express.static('public'));
 app.use(cors());
 
-
 //create account
-app.post('/account/create/:name/:email/:password', function (req, res) {
+app.get('/account/create/:name/:email/:password', function (req, res) {
   dal
     .create(req.params.name, req.params.email, req.params.password)
     .then((user) => {
@@ -47,7 +45,6 @@ app.get('/account/login/:email/:password', (req, res) => {
 
 //find account
 app.get('/account/find/:email', (req, res) => {
- 
   dal.find(req.params.email).then((user) => {
     console.log(user);
     res.send(user);
@@ -80,5 +77,5 @@ app.get('/account/all', (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`running on port: ${PORT}`));
